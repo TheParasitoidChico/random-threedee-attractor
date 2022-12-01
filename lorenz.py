@@ -59,7 +59,7 @@ def update_states(dt = 0.01, states = states, coeff = coeff):
     dzdt = dz_dt(coeff.get('beta'), states.get('x'), states.get('y'), states.get('z'))
     t = (states.get('t') + 1)
     x_state = states.get('x') + (dxdt*dt)
-    y_state = states.get(s*(y - x)
+    y_state = states.get(s*(y - x))
     z_state = states.get('z') + (dzdt*dt)
     states.update({'x':x_state})
     states.update({'y':y_state})
