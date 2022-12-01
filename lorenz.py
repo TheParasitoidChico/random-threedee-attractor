@@ -21,7 +21,8 @@ def change_states(states, x, y, z):
     states.update({'x':x})
     states.update({'y':y})
     states.update({'z':z})
-
+    
+                     # lorenze differential equations below
 def dx_dt(sigma, x, y):
     dxdt = sigma*(y-x)
     return dxdt
@@ -37,22 +38,18 @@ def dz_dt(beta, x, y, z):
 coeff = {'sigma': 10.,
          'rho': 28.000,
          'beta': 2.667}
-
                         # states stored in dictionary - altered over time
 states = {'x': 0.,
           'y': 1.,
           'z': 1.05,
           't': 0}
-
                         # initial states, just in case
 istates = {'x': 0.,
           'y': 1.,
           'z': 1.05,
           't': 0}
-
                         # states in dictionary altered each instance
                         # all parameters here can be swapped out as long as they are provided as dictionaries
-                        
 def update_states(dt = 0.01, states = states, coeff = coeff):
     dxdt = dx_dt(coeff.get('sigma'), states.get('x'), states.get('y'))
     dydt = dy_dt(coeff.get('rho'), states.get('x'), states.get('y'), states.get('z'))
@@ -66,7 +63,8 @@ def update_states(dt = 0.01, states = states, coeff = coeff):
     states.update({'z':z_state})
     states.update({'t':t})
     return [x_state, y_state, z_state, t] # returns a state
-                        # 
+          
+    # this runs the simulation with the above parameters
 def run_slice(time, states, coeff, dt = 0.01):
     outputs = list()
     for t in range(0,time):
@@ -74,6 +72,7 @@ def run_slice(time, states, coeff, dt = 0.01):
         outputs.append(state)
     return outputs
 
+   # in case you want to spit the output to a CSV file instead, so you can look at it elsewhere
 def wtimeseries(slice_data):
     with open('tempdata.csv', 'w') as tempwrite:
         for line in slice_data:
@@ -96,6 +95,11 @@ def show_slice(slice_data):
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=0))
     fig.show()
 
+#SAMPLE USE CASE:
+show_slice(run_slice(1000, states, coeff))
+# should produce a three-dimensional lorenz attractor you can rotate and peak at. you can change the parameters by
+# cloning this repo and changing them manually, or using the change_coeff() function:
+change_coeff(coeff, 5, 6, 7) # for example, 
 
 
 
