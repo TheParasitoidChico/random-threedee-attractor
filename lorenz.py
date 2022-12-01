@@ -59,7 +59,7 @@ def update_states(dt = 0.01, states = states, coeff = coeff):
     dzdt = dz_dt(coeff.get('beta'), states.get('x'), states.get('y'), states.get('z'))
     t = (states.get('t') + 1)
     x_state = states.get('x') + (dxdt*dt)
-    y_state = states.get(s*(y - x))
+    y_state = states.get('y') + (dydt*dt)
     z_state = states.get('z') + (dzdt*dt)
     states.update({'x':x_state})
     states.update({'y':y_state})
@@ -85,7 +85,7 @@ def show_slice(slice_data):
     pio.renderers.default='browser'
     x=np.array([sub[0] for sub in slice_data])
     y=np.array([sub[1] for sub in slice_data])
-    z=np.array([sub[3] for sub in slice_data])
+    z=np.array([sub[2] for sub in slice_data])
     fig = go.Figure(data=[go.Scatter3d(
         x=x,
         y=y,
